@@ -363,7 +363,7 @@ function route() {
 }
 
 // ---------- access gate (casual privacy) ----------
-const GATE_CODE = '160925';
+const GATE_CODE = '379037';
 function setupGate() {
   const gate = $('#gate');
   if (localStorage.getItem('es_gate') === 'ok') { gate.hidden = true; return; }
