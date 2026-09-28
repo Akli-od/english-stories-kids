@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="English Stories">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#4A90D9">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" href="icon-192.png">
   <title>English Stories for Kids</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%9A%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,41 +23,41 @@
     <form class="gate-box" id="gate-form">
       <div class="gate-emoji">📚🔒</div>
       <div class="gate-title">English Stories</div>
-      <p class="gate-sub">Nhập mật khẩu để vào học nhé</p>
+      <p class="gate-sub">Enter the passcode to start</p>
       <input id="gate-input" class="gate-input" type="password" inputmode="numeric" autocomplete="off" placeholder="• • • • • •" />
-      <button type="submit" class="gate-btn">Vào học 🚀</button>
-      <p id="gate-err" class="gate-err" hidden>Sai mật khẩu, thử lại nhé! 🙈</p>
+      <button type="submit" class="gate-btn">Start Learning 🚀</button>
+      <p id="gate-err" class="gate-err" hidden>Wrong passcode, try again! 🙈</p>
     </form>
   </div>
 
   <header class="topbar">
     <div class="brand">📚 English Stories</div>
-    <input id="search" class="search" type="search" placeholder="🔍 Tìm truyện..." autocomplete="off" />
+    <input id="search" class="search" type="search" placeholder="🔍 Search stories..." autocomplete="off" />
   </header>
 
   <main>
     <!-- VIEW 1: home — topic cards -->
     <section id="home-view">
       <div class="home-tabs">
-        <button id="tab-level" class="home-tab active">📚 Theo Level</button>
-        <button id="tab-road" class="home-tab">🎯 Lộ trình học</button>
-        <button id="open-advice" class="home-tab advice-tab">💡 Tư vấn</button>
+        <button id="tab-level" class="home-tab active">📚 By Level</button>
+        <button id="tab-road" class="home-tab">🎯 Learning Path</button>
+        <button id="open-advice" class="home-tab advice-tab">💡 Guide</button>
       </div>
       <div id="levels" class="levels"></div>
       <div id="grid" class="grid" aria-live="polite"></div>
-      <p id="empty" class="empty" hidden>Không tìm thấy truyện nào 🙈</p>
+      <p id="empty" class="empty" hidden>No stories found 🙈</p>
       <div id="road" class="road" hidden></div>
     </section>
 
     <!-- VIEW 2: topic — episode sub-cards -->
     <section id="topic-view" hidden>
       <div class="subhead">
-        <button class="backbtn" id="back-home">← Tất cả truyện</button>
+        <button class="backbtn" id="back-home">← All stories</button>
         <h1 id="topic-title" class="subhead-title"></h1>
-        <button class="backbtn listen-topic" id="listen-topic">🎧 Nghe truyện này</button>
+        <button class="backbtn listen-topic" id="listen-topic">🎧 Listen to this story</button>
       </div>
       <div class="subsearch">
-        <input id="ep-search" class="search" type="search" placeholder="🔍 Tìm tập trong truyện này..." autocomplete="off" />
+        <input id="ep-search" class="search" type="search" placeholder="🔍 Search episodes in this story..." autocomplete="off" />
       </div>
       <div id="ep-grid" class="grid"></div>
     </section>
@@ -59,18 +67,18 @@
       <div class="modal-box">
         <div class="modal-head">
           <span id="back-topic-name" class="modal-title"></span>
-          <button class="closebtn" id="close-modal" aria-label="Đóng">✕</button>
+          <button class="closebtn" id="close-modal" aria-label="Close">✕</button>
         </div>
         <video id="video" class="video" controls autoplay playsinline crossorigin="anonymous" preload="none"></video>
         <div id="now-playing" class="now-playing"></div>
         <div class="stage-bar">
-          <button id="prev" class="navbtn">◀ Tập trước</button>
-          <button id="cc" class="ccbtn" aria-pressed="false">CC phụ đề: TẮT</button>
-          <button id="capsize" class="ccbtn sizebtn" hidden>🔠 Cỡ chữ: Vừa</button>
-          <button id="loop" class="ccbtn loopbtn" aria-pressed="false">🔁 Lặp: TẮT</button>
-          <button id="fs" class="navbtn fsbtn">⛶ Phóng to</button>
-          <button id="listen-from-player" class="ccbtn audiobtn">🎧 Nghe MP3</button>
-          <button id="next" class="navbtn">Tập sau ▶</button>
+          <button id="prev" class="navbtn">◀ Previous</button>
+          <button id="cc" class="ccbtn" aria-pressed="false">CC Subtitles: OFF</button>
+          <button id="capsize" class="ccbtn sizebtn" hidden>🔠 Caption size: Medium</button>
+          <button id="loop" class="ccbtn loopbtn" aria-pressed="false">🔁 Loop: OFF</button>
+          <button id="fs" class="navbtn fsbtn">⛶ Fullscreen</button>
+          <button id="listen-from-player" class="ccbtn audiobtn">🎧 Listen MP3</button>
+          <button id="next" class="navbtn">Next ▶</button>
         </div>
       </div>
     </div>
@@ -79,14 +87,14 @@
     <div id="audio-modal" class="modal" hidden>
       <div class="modal-box audio-box">
         <div class="modal-head">
-          <span id="audio-modal-title" class="modal-title">🎧 Nghe MP3</span>
-          <button class="closebtn" id="close-audio" aria-label="Đóng">✕</button>
+          <span id="audio-modal-title" class="modal-title">🎧 Listen MP3</span>
+          <button class="closebtn" id="close-audio" aria-label="Close">✕</button>
         </div>
         <div class="audio-top">
-          <input id="audio-search" class="search" type="search" placeholder="🔍 Tìm tập..." autocomplete="off" />
+          <input id="audio-search" class="search" type="search" placeholder="🔍 Search episodes..." autocomplete="off" />
           <div class="audio-top-btns">
-            <button id="play-all" class="navbtn">▶️ Phát tất cả</button>
-            <button id="shuffle-all" class="navbtn">🔀 Xáo trộn</button>
+            <button id="play-all" class="navbtn">▶️ Play all</button>
+            <button id="shuffle-all" class="navbtn">🔀 Shuffle</button>
           </div>
           <div id="audio-count" class="audio-count"></div>
         </div>
@@ -98,13 +106,13 @@
     <div id="advice-modal" class="modal" hidden>
       <div class="modal-box advice-box">
         <div class="modal-head">
-          <span class="modal-title">💡 Tư vấn lộ trình cho bé 5 tuổi</span>
-          <button class="closebtn" id="close-advice" aria-label="Đóng">✕</button>
+          <span class="modal-title">💡 Learning plan for a 5-year-old</span>
+          <button class="closebtn" id="close-advice" aria-label="Close">✕</button>
         </div>
         <div class="advice-body">
-          <p class="adv-lead">Đây là bộ <b>Little Fox English</b> — 9 cấp tăng dần. Bé mới bắt đầu thì <b>vùng vàng là Level 1 → 2 → 3</b> (đủ học ~1.5–2 năm). Level 4+ (Alice, Sherlock, tiểu thuyết) để dành sau.</p>
+          <p class="adv-lead">This is the <b>Little Fox English</b> series — 9 levels of increasing difficulty. For beginners, start with the <b>gold zone: Level 1 → 2 → 3</b> (about 1.5–2 years of material). Save Level 4+ (Alice, Sherlock, novels) for later.</p>
 
-          <h3>🔤 Mạch phonics (xuyên Level 1→3)</h3>
+          <h3>🔤 Phonics path (across Levels 1→3)</h3>
           <div class="adv-flow">
             <span>ABC Book <small>(L1)</small></span><i>→</i>
             <span>Word Families <small>(L1)</small></span><i>→</i>
@@ -112,25 +120,25 @@
             <span>Phonics I <small>(L2)</small></span><i>→</i>
             <span>Phonics II <small>(L3)</small></span>
           </div>
-          <p class="adv-note">Học theo thứ tự này, đến Phonics II là bé bắt đầu <b>tự đọc</b> được.</p>
-          <p class="adv-note">📝 <b>Phụ đề dùng khi nào?</b> Bé <b>chưa biết chữ → để phụ đề TẮT</b> (chỉ nghe + nhìn hình, đó là lý do tool mặc định tắt). Khi bé vào <b>Phonics / biết mặt chữ → BẬT phụ đề cỡ lớn</b> để "đọc theo khi nghe", nối âm với mặt chữ → tăng tốc biết đọc. Phụ đề cũng giúp ba/mẹ đọc theo để hỗ trợ bé.</p>
+          <p class="adv-note">Follow this order; by the time your child reaches Phonics II, they start to <b>read on their own</b>.</p>
+          <p class="adv-note">📝 <b>When to use subtitles?</b> If your child <b>cannot read yet → keep subtitles OFF</b> (just listen + watch, which is why the default is off). Once they reach <b>Phonics / recognize letters → turn captions ON in large size</b> to "read along while listening", linking sounds to letters and speeding up reading. Captions also let parents read along to support the child.</p>
 
-          <h3>📚 4 giai đoạn học</h3>
+          <h3>📚 4 learning stages</h3>
           <ol class="adv-stages">
-            <li><b>Khởi động &amp; tắm ngôn ngữ:</b> nghe MP3 nền hằng ngày + xem truyện ngắn nhất (Hello Cupcake, My First Readers 1) — giai đoạn này <b>để phụ đề TẮT</b>, bé chỉ nghe + nhìn hình; xem lại nhiều lần.</li>
-            <li><b>Nền chữ &amp; vần:</b> ABC Book → Word Families → Letter Teams (chơi nhận mặt chữ + vần).</li>
-            <li><b>Phonics — tập đánh vần:</b> Phonics I → Phonics II (khi đã nghe nhiều + nhận mặt chữ).</li>
-            <li><b>Đọc &amp; nghe truyện:</b> My First Readers 1→2→3, rồi cổ tích Level 3 (Cinderella, Snow White…).</li>
+            <li><b>Warm-up &amp; language immersion:</b> play background MP3 daily + watch the easiest short stories (Hello Cupcake, My First Readers 1) — keep <b>subtitles OFF</b> at this stage, just listen + watch, and rewatch many times.</li>
+            <li><b>Letter &amp; word families:</b> ABC Book → Word Families → Letter Teams (play letter and word-family recognition games).</li>
+            <li><b>Phonics — practice spelling:</b> Phonics I → Phonics II (after plenty of listening and letter recognition).</li>
+            <li><b>Reading &amp; listening to stories:</b> My First Readers 1→2→3, then Level 3 fairy tales (Cinderella, Snow White…).</li>
           </ol>
 
-          <h3>⏱️ Nhịp hằng ngày (đừng ép)</h3>
+          <h3>⏱️ Daily rhythm (no pressure)</h3>
           <ul class="adv-rhythm">
-            <li>🎧 Bật <b>MP3 nền 20–30'</b> mỗi khi bé chơi (tắm ngôn ngữ).</li>
-            <li>📺 <b>1 lần/ngày</b> xem 1–2 truyện ngắn có phụ đề (~15').</li>
-            <li>🔤 <b>2–3 lần/tuần</b> 1 tập ABC / Word Families / Phonics.</li>
-            <li>❤️ <b>Nguyên tắc #1:</b> nghe + bắt chước nói trước, phonics để đọc — và <b>dừng khi bé chán</b>, giữ cho vui.</li>
+            <li>🎧 Play <b>background MP3 for 20–30 min</b> whenever your child plays (language immersion).</li>
+            <li>📺 <b>Once a day</b> watch 1–2 short captioned stories (~15 min).</li>
+            <li>🔤 <b>2–3 times a week</b> one ABC / Word Families / Phonics episode.</li>
+            <li>❤️ <b>Rule #1:</b> listen + imitate speaking first, phonics for reading — and <b>stop when your child gets bored</b>, keep it fun.</li>
           </ul>
-          <p class="adv-foot">Bấm tab <b>🎯 Lộ trình học</b> để xem các truyện đã xếp sẵn theo từng giai đoạn.</p>
+          <p class="adv-foot">Click the <b>🎯 Learning Path</b> tab to see stories pre-arranged by stage.</p>
         </div>
       </div>
     </div>
@@ -143,15 +151,25 @@
       <span id="ab-title" class="ab-title">—</span>
     </div>
     <div class="ab-controls">
-      <button id="ab-prev" class="ab-btn" aria-label="Bài trước">⏮</button>
-      <button id="ab-play" class="ab-btn ab-play" aria-label="Phát/Dừng">⏸</button>
-      <button id="ab-next" class="ab-btn" aria-label="Bài sau">⏭</button>
-      <button id="ab-loop" class="ab-btn ab-on" aria-pressed="true" aria-label="Lặp tất cả">🔁</button>
-      <button id="ab-stop" class="ab-btn" aria-label="Tắt">✕</button>
+      <button id="ab-prev" class="ab-btn" aria-label="Previous">⏮</button>
+      <button id="ab-play" class="ab-btn ab-play" aria-label="Play/Pause">⏸</button>
+      <button id="ab-next" class="ab-btn" aria-label="Next">⏭</button>
+      <button id="ab-loop" class="ab-btn ab-on" aria-pressed="true" aria-label="Loop all">🔁</button>
+      <button id="ab-stop" class="ab-btn" aria-label="Stop">✕</button>
     </div>
   </div>
   <audio id="audio" preload="none"></audio>
 
   <script src="app.js?v=17"></script>
+<script>
+/* Register Service Worker (app shell offline support) */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js').catch(function (err) {
+      console.warn('SW register failed:', err);
+    });
+  });
+}
+</script>
 </body>
 </html>

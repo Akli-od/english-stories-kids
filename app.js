@@ -17,9 +17,9 @@ let ccOn = false;            // subtitles OFF by default
 let loopOn = false;
 let capLevel = 0;            // caption size: 0=Vừa, 1=Lớn, 2=Rất lớn
 const CAP_SIZES = [
-  { cls: '', label: 'Vừa' },
-  { cls: 'cap-lg', label: 'Lớn' },
-  { cls: 'cap-xl', label: 'Rất lớn' },
+  { cls: '', label: 'Medium' },
+  { cls: 'cap-lg', label: 'Large' },
+  { cls: 'cap-xl', label: 'Extra Large' },
 ];
 let playing = { slug: null, index: 0 };
 
@@ -51,7 +51,7 @@ function visibleTopics() {
 function renderLevels() {
   const wrap = $('#levels');
   const levels = [...new Set(CATALOG.map((t) => t.level))].sort((a, b) => a - b);
-  const buttons = [['all', 'Tất cả'], ...levels.map((l) => [String(l), `Level ${l}`])];
+  const buttons = [['all', 'All'], ...levels.map((l) => [String(l), `Level ${l}`])];
   wrap.innerHTML = '';
   for (const [val, label] of buttons) {
     const b = document.createElement('button');
@@ -80,7 +80,7 @@ function renderHome() {
   for (const t of list) {
     grid.appendChild(makeCard(
       mediaUrl(t.level, t.slug, t.thumb, 'jpg'), t.title,
-      `<div class="name">${escapeHtml(t.title)}</div><div class="count">${t.count} tập · Level ${t.level}</div>`,
+      `<div class="name">${escapeHtml(t.title)}</div><div class="count">${t.count} eps · Level ${t.level}</div>`,
       () => { location.hash = `#/t/${t.slug}`; }));
   }
   $('#empty').hidden = list.length > 0;
@@ -92,7 +92,7 @@ function renderTopic(slug) {
   const t = BY_SLUG[slug];
   if (!t) { location.hash = '#/'; return; }
   curTopic = t;
-  $('#topic-title').textContent = `${t.title} · ${t.count} tập`;
+  $('#topic-title').textContent = `${t.title} · ${t.count} eps`;
   $('#ep-search').value = '';
   renderEpisodes('');
   setBase('topic');
@@ -155,7 +155,7 @@ function toggleCC() {
   ccOn = !ccOn;
   const b = $('#cc');
   b.setAttribute('aria-pressed', String(ccOn));
-  b.textContent = ccOn ? 'CC phụ đề: BẬT' : 'CC phụ đề: TẮT';
+  b.textContent = ccOn ? 'CC Subtitles: ON' : 'CC Subtitles: OFF';
   $('#capsize').hidden = !ccOn;     // size button only relevant when captions on
   applyCC();
 }
@@ -163,7 +163,7 @@ function applyCapSize() {
   const v = $('#video');
   v.classList.remove('cap-lg', 'cap-xl');
   if (CAP_SIZES[capLevel].cls) v.classList.add(CAP_SIZES[capLevel].cls);
-  $('#capsize').textContent = `🔠 Cỡ chữ: ${CAP_SIZES[capLevel].label}`;
+  $('#capsize').textContent = `🔠 Caption size: ${CAP_SIZES[capLevel].label}`;
 }
 function cycleCapSize() {
   capLevel = (capLevel + 1) % CAP_SIZES.length;
@@ -173,7 +173,7 @@ function toggleLoop() {
   loopOn = !loopOn;
   const b = $('#loop');
   b.setAttribute('aria-pressed', String(loopOn));
-  b.textContent = loopOn ? '🔁 Lặp: BẬT' : '🔁 Lặp: TẮT';
+  b.textContent = loopOn ? '🔁 Loop: ON' : '🔁 Loop: OFF';
 }
 function step(delta) {
   const t = BY_SLUG[playing.slug];
@@ -214,7 +214,7 @@ function audioFiltered(q) {
 function renderAudioList(q) {
   const list = audioFiltered(q);
   audioCurrentList = list;
-  $('#audio-count').textContent = `${list.length} tập`;
+  $('#audio-count').textContent = `${list.length} eps`;
   const ol = $('#audio-list');
   const frag = document.createDocumentFragment();
   list.forEach((e, i) => {
@@ -230,7 +230,7 @@ function renderAudioList(q) {
 function openAudioModal(t) {
   if (!t) return;
   audioSource = topicQueue(t);
-  $('#audio-modal-title').textContent = `🎧 Nghe: ${t.title}`;
+  $('#audio-modal-title').textContent = `🎧 Listen: ${t.title}`;
   $('#audio-search').value = '';
   renderAudioList('');
   $('#audio-modal').hidden = false;
@@ -300,15 +300,15 @@ function setMediaSession(ep) {
 
 // ---------- ROADMAP view (curated learning path) ----------
 const ROADMAP = [
-  { title: '1. Khởi động & tắm ngôn ngữ', desc: 'Nghe nhiều + truyện ngắn dễ nhất, xem lại nhiều lần. Phụ đề TẮT.',
+  { title: '1. Warm-up & Language Immersion', desc: 'Listen a lot + easiest short stories, rewatch many times. Subtitles OFF.',
     slugs: ['hello-cupcake', 'my-first-readers-1', 'who-am-i', 'where-am-i', 'the-blobs', 'dino-buddies'] },
-  { title: '2. Nền chữ & vần', desc: 'Nhận mặt chữ cái và nhóm vần (tiền phonics).',
+  { title: '2. Letter & Word Families', desc: 'Recognize letters and word-family groups (pre-phonics).',
     slugs: ['abc-book', 'word-families', 'letter-teams'] },
-  { title: '3. Phonics — tập đánh vần', desc: 'Đánh vần để bắt đầu tự đọc. Lúc này BẬT phụ đề cỡ lớn.',
+  { title: '3. Phonics — Practice Spelling', desc: 'Sound out words to start reading on your own. Turn captions ON large at this stage.',
     slugs: ['phonics-i', 'phonics-ii'] },
-  { title: '4. Đọc trôi chảy — Readers', desc: 'Bộ readers tăng dần độ khó.',
+  { title: '4. Reading Fluently — Readers', desc: 'A graded reader series that increases in difficulty.',
     slugs: ['my-first-readers-1', 'my-first-readers-2', 'my-first-readers-3', 'bird-and-kip', 'sam-and-lucky', 'south-street-school'] },
-  { title: '5. Truyện cổ tích', desc: 'Cổ tích kinh điển — vừa học vừa mê.',
+  { title: '5. Fairy Tales', desc: 'Classic fairy tales — learn while having fun.',
     slugs: ['cinderella', 'snow-white-and-the-seven-dwarfs', 'rapunzel', 'beauty-and-the-beast', 'jack-and-the-beanstalk', 'puss-in-boots', 'the-velveteen-rabbit'] },
 ];
 
@@ -326,7 +326,7 @@ function renderRoadmap() {
       if (!t) continue;
       grid.appendChild(makeCard(
         mediaUrl(t.level, t.slug, t.thumb, 'jpg'), t.title,
-        `<div class="name">${escapeHtml(t.title)}</div><div class="count">${t.count} tập · Level ${t.level}</div>`,
+        `<div class="name">${escapeHtml(t.title)}</div><div class="count">${t.count} eps · Level ${t.level}</div>`,
         () => { location.hash = `#/t/${t.slug}`; }));
     }
     sec.appendChild(grid);
@@ -440,7 +440,7 @@ function init() {
       renderLevels();
       route();
     })
-    .catch((err) => { $('#grid').innerHTML = `<p class="empty">Lỗi tải danh sách 😢<br>${escapeHtml(err.message)}</p>`; });
+    .catch((err) => { $('#grid').innerHTML = `<p class="empty">Failed to load list 😢<br>${escapeHtml(err.message)}</p>`; });
 }
 
 document.addEventListener('DOMContentLoaded', init);
